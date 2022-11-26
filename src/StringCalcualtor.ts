@@ -1,19 +1,29 @@
+import { ErrorMessages } from "./ErrorMessages";
 import { InvalidInputError } from "./InvalidInputError";
 import { StringCalculatorGuard } from "./StringCalculatorGuard";
 
 export class StringCalculator {
-
   public static add(numbersString: string) {
+    if (/.*-.*/.test(numbersString)) {
+      const negativeNumbers = [...numbersString.matchAll(/,?-\d+,?/g)];
+
+      let nums: number[] = negativeNumbers.map((n) => {
+        console.log({ n });
+        return Number(n[0].match(/-\d+/)![0]);
+      });
+      throw new InvalidInputError(ErrorMessages.negativeNumberMessage(nums));
+    }
     const stringNumbers: string[] = numbersString.split(",");
-    StringCalculatorGuard.checkForMoreThan2Numbers(stringNumbers);
-    
-    const numbers: number[] = stringNumbers.map(n => {
-      const num: number = Number(n);
+
+    const numbers: number[] = stringNumbers.map((n) => {
+      let num: number = Number(n);
       StringCalculatorGuard.checkForNonNumberCharacter(num);
       return num;
     });
-    
-    let sum = numbers.reduce((a, b) => a + b, 0);
+
+    let sum = numbers.reduce((a, b) => {
+      return a + b;
+    }, 0);
     sum = StringCalculator.roundToOneDecimalPlace(sum);
     return sum;
   }

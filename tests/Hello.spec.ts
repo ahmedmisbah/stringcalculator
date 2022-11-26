@@ -1,14 +1,11 @@
-import { Hello } from "../src/Hello"
+import { Hello } from "../src/Hello";
 
 describe("Test environment suite", () => {
+  it("Test running code", () => {
+    const hello = new Hello();
 
-  test("Test running code", () => {
+    const greetedName: string = hello.greet("Gad");
 
-    const hello: Hello = new Hello();
-
-    const greetedName: string = hello.greet("Khaled");
-
-    expect(greetedName).toEqual(`Hello, Khaled`);
-  })
-
-})
+    expect(greetedName).toEqual(`Hello, Gad`);
+  });
+});

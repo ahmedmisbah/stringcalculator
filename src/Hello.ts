@@ -3,3 +3,4 @@ export class Hello {
     return `Hello, ${name}`;
   }
 }
+` `;
